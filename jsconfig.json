@@ -3,7 +3,7 @@
     "module": "ESNext",
     "target": "ES2022",
     "strict": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
     "allowSyntheticDefaultImports": true
   },
   "include": ["**/*.js"],
