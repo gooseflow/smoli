@@ -6,7 +6,7 @@ router.get('/', (_, res) => {
     res.send('Hello world\n');
 })
 
-router.get('/dbtest', async (req, res) => {
+router.get('/dbtest', async (_, res) => {
     try {
         const db = await connectDB();
         const collection = db.collection('documents');
@@ -18,7 +18,7 @@ router.get('/dbtest', async (req, res) => {
     }
 });
 
-router.post('/dbtest', async (req, res) => {
+router.post('/dbtest', async (_, res) => {
     try {
         const db = await connectDB();
         const collection = db.collection('documents');
@@ -29,6 +29,10 @@ router.post('/dbtest', async (req, res) => {
         console.error('Error fetching data:', error);
         res.status(500).send('Error fetching data from the database');
     }
+});
+
+router.get('/pugtest', async (_, res) => {
+    res.render('index', { title: 'smo<li>', message: 'Hello from smoli<li>' });
 });
 
 export default router;
