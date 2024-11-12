@@ -1,6 +1,6 @@
 import express from 'express';
 import routes from './routes.js';
-import { closeDB, initDB } from './db.js';
+import { closeDB, initDBConnection } from './db.js';
 
 const app = express();
 
@@ -9,7 +9,7 @@ app.use(express.json());
 app.use('/', routes);
 
 (async () => {
-    await initDB();
+    await initDBConnection();
 })();
 
 process.on('SIGINT', async () => {
