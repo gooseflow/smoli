@@ -1,17 +1,24 @@
-import app from './app.js';
-import { MongoClient } from 'mongodb'
-import { initDatabase } from './db.js';
+import express from 'express';
+import routes from './routes.js';
+import { closeDB, initDB } from './db.js';
+
+const app = express();
+
+app.use(express.json());
+
+app.use('/', routes);
+
+(async () => {
+    await initDB();
+})();
+
+process.on('SIGINT', async () => {
+    await closeDB();
+    process.exit(0);
+});
 
 const port = process.env.PORT || 3000;
-
-// Connection URL
-const url = 'mongodb://root:example@localhost:27017';
-const client = new MongoClient(url);
-
 app.listen(port, () => {
-    initDatabase(client)
-        .then(console.log)
-        .catch(console.error)
-        .finally(() => client.close());
     console.log(`Example app listening on port ${port}`);
 });
+

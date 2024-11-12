@@ -1,20 +1,40 @@
-// Database Name
+import { MongoClient } from "mongodb";
+
+const url = 'mongodb://root:example@localhost:27017';
+const client = new MongoClient(url);
 const dbName = 'myProject';
 
-export async function initDatabase(client) {
-    // Use connect method to connect to the server
-    await client.connect();
-    console.log('Connected successfully to server');
-    const db = client.db(dbName);
-    const collection = db.collection('documents');
+let db = null;
 
-    // the following code examples can be pasted here...
-    const insertResult = await collection.insertMany([{ a: 1 }, { a: 2 }, { a: 3 }]);
-    console.log('Inserted documents =>', insertResult);
+export async function connectDB() {
+    if (!db) {
+        try {
+            await client.connect();
+            db = client.db(dbName);
+            console.log('MongoDB connected');
+        } catch (error) {
+            console.error('Error connecting to MongoDb:', error);
+            throw new Error('Failed to connect to the database');
+        }
+    }
+    return db;
+}
 
-    const findResult = await collection.find({}).toArray();
-    console.log('Found documents =>', findResult);
+export async function closeDB() {
+    try {
+        await client.close();
+        console.log('MongoDB connection closed');
+    } catch (error) {
+        console.error('Error closing MongoDB connection:', error);
+    }
+}
 
-    return 'done.';
+export async function initDBConnection() {
+    try {
+        await connectDB();
+    } catch (error) {
+        console.error(error);
+        process.exit(1);
+    }
 }
 
