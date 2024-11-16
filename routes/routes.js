@@ -1,5 +1,5 @@
 import express from 'express';
-import { connectDB } from './db.js';
+import { connectDB } from '../persistence/db.js';
 const router = express.Router();
 
 router.get('/', (_, res) => {
@@ -33,6 +33,10 @@ router.post('/dbtest', async (_, res) => {
 
 router.get('/pugtest', async (_, res) => {
     res.render('index', { title: 'smo<li>', message: 'Hello from smoli<li>' });
+});
+
+router.get('/pugtest2', async (_, res) => {
+    res.render('error', {});
 });
 
 export default router;

@@ -1,6 +1,6 @@
 import express from 'express';
-import routes from './routes.js';
-import { closeDB, initDBConnection } from './db.js';
+import routes from './routes/routes.js';
+import { closeDB, initDBConnection } from './persistence/db.js';
 
 const app = express();
 
