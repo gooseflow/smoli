@@ -1,6 +1,10 @@
 import express from 'express';
 import { connectDB } from '../persistence/db.js';
+import { requestInfo } from '../middleware/logging.js';
+
 const router = express.Router();
+
+router.use(requestInfo);
 
 router.get('/', (_, res) => {
     res.send('Hello world\n');
