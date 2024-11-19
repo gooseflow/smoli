@@ -1,13 +1,14 @@
 import express from 'express';
 import { connectDB } from '../persistence/db.js';
 import { requestInfo } from '../middleware/logging.js';
+import { indexPageDetails } from '../handlers/views.js';
 
 const router = express.Router();
 
 router.use(requestInfo);
 
 router.get('/', (_, res) => {
-    res.render('index', { title: 'URL Shortener | smoli', appTitle: 'smo<li>' });
+    res.render('index', indexPageDetails());
 })
 
 router.get('/dbtest', async (_, res) => {
