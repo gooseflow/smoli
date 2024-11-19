@@ -7,7 +7,7 @@ const router = express.Router();
 router.use(requestInfo);
 
 router.get('/', (_, res) => {
-    res.send('Hello world\n');
+    res.render('index', { title: 'URL Shortener | smoli', appTitle: 'smo<li>' });
 })
 
 router.get('/dbtest', async (_, res) => {
@@ -33,14 +33,6 @@ router.post('/dbtest', async (_, res) => {
         console.error('Error fetching data:', error);
         res.status(500).send('Error fetching data from the database');
     }
-});
-
-router.get('/pugtest', async (_, res) => {
-    res.render('index', { title: 'smo<li>', message: 'Hello from smoli<li>' });
-});
-
-router.get('/pugtest2', async (_, res) => {
-    res.render('error', {});
 });
 
 export default router;
