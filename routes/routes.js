@@ -2,21 +2,21 @@ import express from 'express';
 import { connectDB } from '../persistence/db.js';
 import { requestInfo } from '../middleware/logging.js';
 import { indexPageDetails } from '../handlers/views.js';
+import { getShortUrl } from '../persistence/urls.js';
 
 const router = express.Router();
 
 router.use(requestInfo);
 
-router.get('/', (_, res) => {
+router.get('/', (req, res) => {
     res.render('index', indexPageDetails());
-})
+});
 
-router.get('/dbtest', async (_, res) => {
+router.get('/shortUrl', async (req, res) => {
     try {
-        const db = await connectDB();
-        const collection = db.collection('documents');
-        const data = await collection.find().toArray();
-        res.json(data);
+        console.log('query', req.query)
+        const r = await getShortUrl(req.query.url);
+        res.json(r);
     } catch (error) {
         console.error('Error fetching data:', error);
         res.status(500).send('Error fetching data from the database');
