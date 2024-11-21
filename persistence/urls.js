@@ -1,4 +1,5 @@
-import { Collection } from "mongodb"; import { closeDB, connectDB } from "./db.js";
+import { Collection } from "mongodb";
+import { connectDB } from "./db.js";
 
 /**
  * @param {string} longUrl
