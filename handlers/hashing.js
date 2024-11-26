@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 
 const base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-export function hashUrl(str) {
+function hashUrl(str) {
     const salt = getRandomBase62String(6);
     const hash = crypto.createHash('blake2s256').update(str + salt).digest('hex');
 
@@ -18,7 +18,7 @@ export function hashUrl(str) {
     return base62.slice(0, 7);
 }
 
-export function getRandomBase62String(len) {
+function getRandomBase62String(len) {
     const randomVals = crypto.getRandomValues(new Uint32Array(len));
     let s = "";
 
@@ -30,3 +30,6 @@ export function getRandomBase62String(len) {
     return s;
 }
 
+export const hashingHandler = {
+    hashUrl
+}

@@ -1,8 +1,7 @@
 import express from 'express';
-import { connectDB } from '../persistence/db.js';
 import { requestInfo } from '../middleware/logging.js';
 import { indexPageDetails } from '../handlers/views.js';
-import { getShortUrl } from '../persistence/urls.js';
+import { urlsHandler } from '../handlers/urls.js';
 
 const router = express.Router();
 
@@ -14,7 +13,6 @@ router.get('/', (req, res) => {
 
 router.get('/shortUrl', async (req, res) => {
     try {
-        console.log('query', req.query)
         const r = await getShortUrl(req.query.url);
         res.json(r);
     } catch (error) {
@@ -23,13 +21,11 @@ router.get('/shortUrl', async (req, res) => {
     }
 });
 
-router.post('/dbtest', async (_, res) => {
+router.get('/test', async (_, res) => {
     try {
-        const db = await connectDB();
-        const collection = db.collection('documents');
-        const insertResult = await collection.insertMany([{ a: 1 }, { a: 2 }, { a: 3 }]);
-        console.log('Inserted documents =>', insertResult);
-        res.json(insertResult);
+        await urlsHandler.getShortUrl("someLongUrl");
+
+        res.json({});
     } catch (error) {
         console.error('Error fetching data:', error);
         res.status(500).send('Error fetching data from the database');
