@@ -11,25 +11,26 @@ router.get('/', (req, res) => {
     res.render('index', indexPageDetails());
 });
 
-router.get('/shortUrl', async (req, res) => {
+router.post('/', async (req, res) => {
+    const { url } = req.body;
+
+    // TODO: move this logic to a middleware error handler
     try {
-        const r = await getShortUrl(req.query.url);
-        res.json(r);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        res.status(500).send('Error fetching data from the database');
-    }
+        const shortUrl = await urlsHandler.createShortUrl(url);
+        res.json("created shortUrl");
+    } catch (error) { }
 });
 
-router.get('/test', async (_, res) => {
+router.get('/:url', async (req, res) => {
     try {
-        await urlsHandler.getShortUrl("someLongUrl");
-
-        res.json({});
+        const { url } = req.params;
+        const longUrl = await urlsHandler.getLongUrl(url);
+        res.redirect(301, longUrl);
     } catch (error) {
-        console.error('Error fetching data:', error);
-        res.status(500).send('Error fetching data from the database');
+        console.error('longUrl pair not found for shortUrl provided', error);
+        res.status(404).send('longUrl pair not found for shortUrl provided');
     }
 });
 
 export default router;
+

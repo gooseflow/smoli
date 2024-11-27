@@ -2,9 +2,21 @@ import { urlsDb } from "../persistence/urls.js";
 import { hashingHandler } from "./hashing.js";
 
 /**
+ * @param {string} shortUrl 
+ * @return {string} returns longUrl pair of shortUrl provided
+ */
+async function getLongUrl(shortUrl) {
+    try {
+        return await urlsDb.getLongUrl(shortUrl);
+    } catch (error) {
+        throw new Error("404 Not Found");
+    }
+}
+
+/**
  * @param {string} longUrl
  */
-async function getShortUrl(longUrl) {
+async function createShortUrl(longUrl) {
     try {
         return await urlsDb.getShortUrl(longUrl);
     } catch (error) {
@@ -12,6 +24,9 @@ async function getShortUrl(longUrl) {
     }
 };
 
+/**
+ * @param {string} longUrl
+ */
 async function generateShortUrl(longUrl) {
     let shortUrl = "";
     let urlExists = true;
@@ -27,6 +42,7 @@ async function generateShortUrl(longUrl) {
 }
 
 export const urlsHandler = {
-    getShortUrl
+    createShortUrl,
+    getLongUrl
 }
 

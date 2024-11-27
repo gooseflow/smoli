@@ -2,6 +2,24 @@ import { Collection } from "mongodb";
 import { connectDB } from "./db.js";
 
 /**
+ * @param {string} shortUrl 
+ */
+async function getLongUrl(shortUrl) {
+    const db = await connectDB();
+    /**
+     * @type {Collection} collection
+     */
+    const collection = db.collection('urls');
+
+    const doc = await collection.findOne({ shortUrl }, { projection: { longUrl: 1 } });
+    if (!doc) {
+        throw new Error('404 longUrl pair not found for given shortUrl');
+    }
+
+    return doc.longUrl;
+}
+
+/**
  * @param {string} shortUrl
  */
 async function shortUrlExists(shortUrl) {
@@ -25,7 +43,7 @@ async function getShortUrl(longUrl) {
     const collection = db.collection('urls');
 
     const doc = await collection.findOne({ longUrl }, { projection: { shortUrl: 1 } });
-    if (doc) {
+    if (!doc) {
         throw new Error('404 shortUrl pair not found for given longUrl');
     }
 
@@ -50,6 +68,7 @@ async function createShortUrl(longUrl, shortUrl) {
 export const urlsDb = {
     shortUrlExists,
     getShortUrl,
-    createShortUrl
+    createShortUrl,
+    getLongUrl
 }
 
