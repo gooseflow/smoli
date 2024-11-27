@@ -1,19 +1,19 @@
-import express from 'express';
-import routes from './routes/routes.js';
-import { closeDB, initDBConnection } from './persistence/db.js';
+import express from "express";
+import routes from "./routes/routes.js";
+import { closeDB, initDBConnection } from "./persistence/db.js";
 
 const app = express();
 
 app.use(express.json());
-app.set('view engine', 'pug');
+app.set("view engine", "pug");
 
-app.use('/', routes);
+app.use("/", routes);
 
 (async () => {
     await initDBConnection();
 })();
 
-process.on('SIGINT', async () => {
+process.on("SIGINT", async () => {
     await closeDB();
     process.exit(0);
 });

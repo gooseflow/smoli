@@ -1,10 +1,10 @@
-import crypto from 'node:crypto';
+import crypto from "node:crypto";
 
-const base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+const base62chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 function hashUrl(str) {
     const salt = getRandomBase62String(6);
-    const hash = crypto.createHash('blake2s256').update(str + salt).digest('hex');
+    const hash = crypto.createHash("blake2s256").update(str + salt).digest("hex");
 
     // convert the first 11 characters (representing up to 44 bits) of the hash to a number
     let base10 = parseInt(hash.substring(0, 11), 16);

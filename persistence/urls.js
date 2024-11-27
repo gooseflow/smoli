@@ -9,11 +9,11 @@ async function getLongUrl(shortUrl) {
     /**
      * @type {Collection} collection
      */
-    const collection = db.collection('urls');
+    const collection = db.collection("urls");
 
     const doc = await collection.findOne({ shortUrl }, { projection: { longUrl: 1 } });
     if (!doc) {
-        throw new Error('404 longUrl pair not found for given shortUrl');
+        throw new Error("404 longUrl pair not found for given shortUrl");
     }
 
     return doc.longUrl;
@@ -27,7 +27,7 @@ async function shortUrlExists(shortUrl) {
     /**
      * @type {Collection} collection
      */
-    const collection = db.collection('urls');
+    const collection = db.collection("urls");
 
     return !!(await collection.findOne({ shortUrl }));
 }
@@ -40,11 +40,11 @@ async function getShortUrl(longUrl) {
     /**
      * @type {Collection} collection
      */
-    const collection = db.collection('urls');
+    const collection = db.collection("urls");
 
     const doc = await collection.findOne({ longUrl }, { projection: { shortUrl: 1 } });
     if (!doc) {
-        throw new Error('404 shortUrl pair not found for given longUrl');
+        throw new Error("404 shortUrl pair not found for given longUrl");
     }
 
     return doc.shortUrl;
@@ -55,11 +55,11 @@ async function createShortUrl(longUrl, shortUrl) {
     /**
      * @type {Collection} collection
      */
-    const collection = db.collection('urls');
+    const collection = db.collection("urls");
 
     const doc = await collection.findOne({ longUrl }, { projection: { shortUrl: 1 } });
     if (doc) {
-        throw new Error('400 shortUrl pair already exists for provided longUrl');
+        throw new Error("400 shortUrl pair already exists for provided longUrl");
     }
 
     return await collection.insertOne({ longUrl, shortUrl });
