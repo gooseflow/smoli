@@ -2,7 +2,6 @@ import express from "express";
 import { requestInfo } from "../middleware/logging.js";
 import { indexPageDetails } from "../handlers/views.js";
 import { urlsHandler } from "../handlers/urls.js";
-import { NotFoundError } from "../errors/errors.js";
 
 const router = express.Router();
 
@@ -14,12 +13,6 @@ router.get("/", (req, res) => {
 
 router.post("/", async (req, res) => {
     const { url } = req.body;
-    try {
-        throw new NotFoundError("taci fmm")
-    } catch (error) {
-        console.error(error.stack)
-        res.status(error.statusCode).send({ message: error.message })
-    }
 
     // TODO: move this logic to a middleware error handler
     try {
