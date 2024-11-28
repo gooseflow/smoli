@@ -1,16 +1,14 @@
+import { Errors } from "../config/errors.js";
+import { NotFoundError } from "../http/errors.js";
 import { urlsDb } from "../persistence/urls.js";
 import { hashingHandler } from "./hashing.js";
 
 /**
  * @param {string} shortUrl 
- * @return {string} returns longUrl pair of shortUrl provided
+ * @return {Promise<string>} returns longUrl pair of shortUrl provided
  */
 async function getLongUrl(shortUrl) {
-    try {
-        return await urlsDb.getLongUrl(shortUrl);
-    } catch (error) {
-        throw new Error("404 Not Found");
-    }
+    return await urlsDb.getLongUrl(shortUrl);
 }
 
 /**
@@ -20,7 +18,10 @@ async function createShortUrl(longUrl) {
     try {
         return await urlsDb.getShortUrl(longUrl);
     } catch (error) {
-        return await generateShortUrl(longUrl);
+        if (error.reason === Errors.NoShortUrl) {
+            return await generateShortUrl(longUrl);
+        }
+        throw error;
     }
 };
 

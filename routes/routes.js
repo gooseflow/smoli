@@ -2,35 +2,38 @@ import express from "express";
 import { requestInfo } from "../middleware/logging.js";
 import { indexPageDetails } from "../handlers/views.js";
 import { urlsHandler } from "../handlers/urls.js";
+import { errorHandler } from "../middleware/errors.js";
 
 const router = express.Router();
 
 router.use(requestInfo);
 
-router.get("/", (req, res) => {
+router.get("/", (_, res) => {
     res.render("index", indexPageDetails());
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
     const { url } = req.body;
 
-    // TODO: move this logic to a middleware error handler
     try {
         const shortUrl = await urlsHandler.createShortUrl(url);
-        res.json("created shortUrl");
-    } catch (error) { }
+        res.status(201).send({ message: `created shortUrl: ${shortUrl}` });
+    } catch (error) {
+        next(error);
+    }
 });
 
-router.get("/:url", async (req, res) => {
+router.get("/:url", async (req, res, next) => {
     try {
         const { url } = req.params;
         const longUrl = await urlsHandler.getLongUrl(url);
         res.redirect(301, longUrl);
     } catch (error) {
-        console.error("longUrl pair not found for shortUrl provided", error);
-        res.status(404).send("longUrl pair not found for shortUrl provided");
+        next(error);
     }
 });
+
+router.use(errorHandler);
 
 export default router;
 

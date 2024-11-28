@@ -3,6 +3,7 @@ export function HttpError(statusCode, message, reason = null) {
     error.statusCode = statusCode;
     error.name = "AppError";
     error.reason = reason;
+    error.isHttp = true;
     Error.captureStackTrace(error, HttpError);
     return error;
 }

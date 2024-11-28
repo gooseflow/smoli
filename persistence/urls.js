@@ -1,5 +1,7 @@
 import { Collection } from "mongodb";
 import { connectDB } from "./db.js";
+import { BadRequestError, NotFoundError } from "../http/errors.js";
+import { Errors } from "../config/errors.js";
 
 /**
  * @param {string} shortUrl 
@@ -13,7 +15,7 @@ async function getLongUrl(shortUrl) {
 
     const doc = await collection.findOne({ shortUrl }, { projection: { longUrl: 1 } });
     if (!doc) {
-        throw new Error("404 longUrl pair not found for given shortUrl");
+        throw new NotFoundError("longUrl pair not found for given shortUrl");
     }
 
     return doc.longUrl;
@@ -44,7 +46,7 @@ async function getShortUrl(longUrl) {
 
     const doc = await collection.findOne({ longUrl }, { projection: { shortUrl: 1 } });
     if (!doc) {
-        throw new Error("404 shortUrl pair not found for given longUrl");
+        throw new NotFoundError("shortUrl pair not found for given longUrl", Errors.NoShortUrl);
     }
 
     return doc.shortUrl;
@@ -59,7 +61,7 @@ async function createShortUrl(longUrl, shortUrl) {
 
     const doc = await collection.findOne({ longUrl }, { projection: { shortUrl: 1 } });
     if (doc) {
-        throw new Error("400 shortUrl pair already exists for provided longUrl");
+        throw new BadRequestError("shortUrl pair already exists for provided longUrl");
     }
 
     return await collection.insertOne({ longUrl, shortUrl });
