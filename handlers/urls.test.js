@@ -17,11 +17,10 @@ describe('urlsHandler.getLongUrl', () => {
 
     it('should propagate error thrown if urlsDb.getLongUrl rejects', async () => {
         const shortUrl = 'smo.li/abc123';
-        const err = new NotFoundError('test');
 
-        jest.spyOn(urlsDb, 'getLongUrl').mockRejectedValueOnce(err);
+        jest.spyOn(urlsDb, 'getLongUrl').mockRejectedValueOnce(new NotFoundError());
 
-        await expect(urlsHandler.getLongUrl(shortUrl)).rejects.toThrowError(err);
+        await expect(urlsHandler.getLongUrl(shortUrl)).rejects.toThrow(NotFoundError);
         expect(urlsDb.getLongUrl).toHaveBeenCalledWith(shortUrl);
     });
 });
