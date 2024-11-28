@@ -2,7 +2,7 @@ import express from "express";
 import { requestInfo } from "../middleware/logging.js";
 import { indexPageDetails } from "../handlers/views.js";
 import { urlsHandler } from "../handlers/urls.js";
-import { errorHandler } from "../middleware/errors.js";
+import { errorHandler, errorLogger } from "../middleware/errors.js";
 
 const router = express.Router();
 
@@ -33,6 +33,7 @@ router.get("/:url", async (req, res, next) => {
     }
 });
 
+router.use(errorLogger);
 router.use(errorHandler);
 
 export default router;

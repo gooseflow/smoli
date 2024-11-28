@@ -1,5 +1,4 @@
 import { Errors } from "../config/errors.js";
-import { NotFoundError } from "../http/errors.js";
 import { urlsDb } from "../persistence/urls.js";
 import { hashingHandler } from "./hashing.js";
 
