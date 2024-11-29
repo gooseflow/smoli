@@ -18,7 +18,7 @@ async function createShortUrl(longUrl) {
         return await urlsDb.getShortUrl(longUrl);
     } catch (error) {
         if (error.reason === Errors.NoShortUrl) {
-            return await generateShortUrl(longUrl);
+            return await urlsHandler.generateShortUrl(longUrl);
         }
         throw error;
     }
@@ -43,6 +43,7 @@ async function generateShortUrl(longUrl) {
 
 export const urlsHandler = {
     createShortUrl,
-    getLongUrl
+    getLongUrl,
+    generateShortUrl
 }
 
