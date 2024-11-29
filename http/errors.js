@@ -1,7 +1,7 @@
 export function HttpError(statusCode, message, reason = null) {
     const error = new Error(message);
     error.statusCode = statusCode;
-    error.name = "AppError";
+    error.name = "HttpError";
     error.reason = reason;
     error.isHttp = true;
     Error.captureStackTrace(error, HttpError);
