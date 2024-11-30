@@ -1,9 +1,9 @@
 import { jest } from '@jest/globals';
-import { urlsHandler } from './urls.js';
-import { urlsDb } from '../persistence/urls.js';
-import { BadRequestError, NotFoundError } from '../http/errors.js';
-import { hashingHandler } from './hashing.js';
-import { Errors } from '../config/errors.js';
+import { urlsHandler } from '../../handlers/urls.js';
+import { urlsDb } from '../../persistence/urls.js';
+import { BadRequestError, NotFoundError } from '../../http/errors.js';
+import { Errors } from '../../config/errors.js';
+import { hashingHandler } from '../../handlers/hashing.js';
 
 describe('urlsHandler', () => {
     beforeEach(() => {
