@@ -1,8 +1,9 @@
 import { MongoClient } from "mongodb";
+import { Env } from "../config/env.js";
 
 const url = "mongodb://root:example@localhost:27017";
 const client = new MongoClient(url);
-const dbName = "myProject";
+const dbName = getDbName();
 
 let db = null;
 
@@ -38,3 +39,10 @@ export async function initDBConnection() {
     }
 }
 
+function getDbName() {
+    switch (process.env.SMOLI_ENV) {
+        case Env.prod: return process.env.DB_NAME_PROD;
+        case Env.dev: return process.env.DB_NAME_DEV;
+        case Env.test: return process.env.DB_NAME_TEST;
+    }
+}
