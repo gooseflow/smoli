@@ -1,7 +1,9 @@
 block content
   div(class="container mt-6 bg-darkBg p-6 rounded-lg shadow-lg w-96 border border-accent")
     div.mb-4
-      label(for="long-url" class="block text-lg mb-2") Your long URL
+      label(for="long-url" class="block text-lg mb-2 flex items-center")
+        i(class="fas fa-link mr-2")
+        | your URL
       input(
         id="long-url"
         name="url"
@@ -13,7 +15,9 @@ block content
       )
 
     div.mb-4
-      label(for="short-url" class="block text-lg mb-2") Your short URL
+      label(for="long-url" class="block text-lg mb-2 flex items-center")
+        i(class="fas fa-kiwi-bird mr-2")
+        | smoli
       input(
         id="short-url"
         type="text"
@@ -28,7 +32,7 @@ block content
         title="Visit URL"
         class="flex items-center justify-center h-12 w-12 bg-accent text-darkBg rounded-md hover:bg-lightText"
       )
-        i(class="fas fa-share")
+        i(class="fas fa-paper-plane")
 
       button(
         type="button"
@@ -36,7 +40,7 @@ block content
         class="flex items-center justify-center h-12 w-12 bg-accent text-darkBg rounded-md hover:bg-lightText"
         onclick=`copyToClipboard("${shortUrl}", event)`
       )
-        i(class="fas fa-copy")
+        i(class="fas fa-clone")
 
       div(
         id="copyNotification"
@@ -50,5 +54,5 @@ block content
         hx-target="#content"
         hx-swap="innerHTML"
         class="flex-grow h-12 bg-accent text-darkBg rounded-md p-3 hover:bg-lightText"
-      ) Shorten Another
+      ) shorten another !
 

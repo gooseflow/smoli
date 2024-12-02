@@ -7,12 +7,15 @@ block content
       autocomplete="off"
     )
       div(class="mb-4")
-        label(for="long-url" class="block text-lg mb-2") Shorten a long URL
+        //label(for="long-url" class="block text-lg mb-2") Shorten a long URL
+        label(for="long-url" class="block text-lg mb-2 flex items-center")
+          i(class="fas fa-link mr-2")
+          | shorten a long URL
         input(
           id="long-url"
           name="url"
           type="text"
-          placeholder="Enter a long link"
+          placeholder="enter a long URL here"
           class="w-full p-3 bg-gray-700 border border-gray-600 text-white rounded-md"
           oninput="toggleButton()"
         )
@@ -23,4 +26,4 @@ block content
           id="submit-button"
           class="w-full p-3 bg-accent text-darkBg rounded-md hover:bg-lightText disabled:bg-gray-500 disabled:cursor-not-allowed"
           disabled
-        ) Shorten URL
+        ) shorten !
