@@ -1,0 +1,54 @@
+block content
+  div(class="container mt-6 bg-darkBg p-6 rounded-lg shadow-lg w-80 border border-accent")
+    div.mb-4
+      label(for="long-url" class="block text-lg mb-2") Your long URL
+      input(
+        id="long-url"
+        name="url"
+        type="text"
+        placeholder="Enter a long link"
+        value=longUrl
+        class="w-full p-3 bg-gray-700 border border-gray-600 text-white rounded-md"
+        readonly
+      )
+
+    div.mb-4
+      label(for="short-url" class="block text-lg mb-2") Your short URL
+      input(
+        id="short-url"
+        type="text"
+        value=shortUrl
+        class="w-full p-3 bg-gray-700 border border-gray-600 text-white rounded-md"
+        readonly
+      )
+
+    .flex.items-center.gap-2
+      a(
+        href=shortUrl
+        title="Visit URL"
+        class="flex items-center justify-center h-12 w-12 bg-accent text-darkBg rounded-md hover:bg-lightText"
+      )
+        i(class="fas fa-share")
+
+      button(
+        type="button"
+        title="Copy to Clipboard"
+        class="flex items-center justify-center h-12 w-12 bg-accent text-darkBg rounded-md hover:bg-lightText"
+        onclick=`copyToClipboard("${shortUrl}", event)`
+      )
+        i(class="fas fa-copy")
+
+      div(
+        id="copyNotification"
+        class="fixed p-2 bg-gray-800 text-white text-sm rounded-md shadow-lg opacity-0 transition-opacity duration-300 pointer-events-none"
+      )
+        | URL copied to clipboard!
+
+      button(
+        type="button"
+        hx-get="/"
+        hx-target="#content"
+        hx-swap="innerHTML"
+        class="flex-grow h-12 bg-accent text-darkBg rounded-md p-3 hover:bg-lightText"
+      ) Shorten Another
+

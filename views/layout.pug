@@ -1,0 +1,49 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Short URL Generator
+    script(src="https://cdn.tailwindcss.com")
+    script(src="https://unpkg.com/htmx.org@2.0.3")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css")
+
+    script.
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              darkBg: '#2F323A',
+              accent: '#6279B8',
+              lightText: '#f8f8f8'
+            }
+          }
+        }
+      }
+
+  script.
+    function copyToClipboard(text, event) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          const notification = document.getElementById('copyNotification');
+          const { clientX, clientY } = event;
+
+          notification.style.left = `${clientX + 10}px`;
+          notification.style.top = `${clientY + 10}px`;
+          notification.style.opacity = '1';
+
+          setTimeout(() => {
+            notification.style.opacity = '0';
+          }, 800);
+        })
+        .catch(err => {
+          console.error('Failed to copy text: ', err);
+        });
+    }
+
+  body(class="bg-darkBg text-lightText flex flex-col items-center")
+    #banner(class="banner w-full bg-accent text-lightText py-4 px-6")
+      include banner.pug
+    #content
+      include home.pug 
+

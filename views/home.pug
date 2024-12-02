@@ -1,0 +1,23 @@
+block content
+  div(class="container mt-6 bg-darkBg p-6 rounded-lg shadow-lg w-80 border border-accent")
+    form(
+      hx-post="/"
+      hx-target="#content"
+      hx-swap="innerHTML"
+      autocomplete="off"
+    )
+      div(class="mb-4")
+        label(for="long-url" class="block text-lg mb-2") Shorten a long URL
+        input(
+          id="long-url"
+          name="url"
+          type="text"
+          placeholder="Enter a long link"
+          class="w-full p-3 bg-gray-700 border border-gray-600 text-white rounded-md"
+        )
+
+      div(class="mb-4")
+        button(
+          type="submit"
+          class="w-full p-3 bg-accent text-darkBg rounded-md hover:bg-lightText"
+        ) Shorten URL

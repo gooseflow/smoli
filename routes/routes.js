@@ -1,15 +1,19 @@
 import express from "express";
 import { requestInfo } from "../middleware/logging.js";
-import { indexPageDetails } from "../handlers/views.js";
 import { urlsHandler } from "../handlers/urls.js";
 import { errorHandler, errorLogger } from "../middleware/errors.js";
+import { server } from "../handlers/server.js";
 
 const router = express.Router();
 
 router.use(requestInfo);
 
-router.get("/", (_, res) => {
-    res.render("index", indexPageDetails());
+router.get("/", (req, res) => {
+    if (server.isSameSite(req)) {
+        res.render('home');
+    } else {
+        res.render('layout');
+    }
 });
 
 router.post("/", async (req, res, next) => {
@@ -17,7 +21,8 @@ router.post("/", async (req, res, next) => {
 
     try {
         const shortUrl = await urlsHandler.createShortUrl(url);
-        res.status(201).send({ message: `created shortUrl: ${shortUrl}` });
+        const serverUrl = server.getServerUrl(req);
+        res.render("result", { shortUrl: `${serverUrl}/${shortUrl}`, longUrl: url });
     } catch (error) {
         next(error);
     }
