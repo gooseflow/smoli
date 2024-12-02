@@ -1,5 +1,5 @@
 block content
-  div(class="container mt-6 bg-darkBg p-6 rounded-lg shadow-lg w-80 border border-accent")
+  div(class="container mt-6 bg-darkBg p-6 rounded-lg shadow-lg w-96 border border-accent")
     form(
       hx-post="/"
       hx-target="#content"
@@ -14,10 +14,13 @@ block content
           type="text"
           placeholder="Enter a long link"
           class="w-full p-3 bg-gray-700 border border-gray-600 text-white rounded-md"
+          oninput="toggleButton()"
         )
 
       div(class="mb-4")
         button(
           type="submit"
-          class="w-full p-3 bg-accent text-darkBg rounded-md hover:bg-lightText"
+          id="submit-button"
+          class="w-full p-3 bg-accent text-darkBg rounded-md hover:bg-lightText disabled:bg-gray-500 disabled:cursor-not-allowed"
+          disabled
         ) Shorten URL

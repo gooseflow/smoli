@@ -21,25 +21,33 @@ html
         }
       }
 
-  script.
-    function copyToClipboard(text, event) {
-      navigator.clipboard.writeText(text)
-        .then(() => {
-          const notification = document.getElementById('copyNotification');
-          const { clientX, clientY } = event;
+    script.
+      function copyToClipboard(text, event) {
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            const notification = document.getElementById('copyNotification');
+            const { clientX, clientY } = event;
 
-          notification.style.left = `${clientX + 10}px`;
-          notification.style.top = `${clientY + 10}px`;
-          notification.style.opacity = '1';
+            notification.style.left = `${clientX + 10}px`;
+            notification.style.top = `${clientY + 10}px`;
+            notification.style.opacity = '1';
 
-          setTimeout(() => {
-            notification.style.opacity = '0';
-          }, 800);
-        })
-        .catch(err => {
-          console.error('Failed to copy text: ', err);
-        });
-    }
+            setTimeout(() => {
+              notification.style.opacity = '0';
+            }, 800);
+          })
+          .catch(err => {
+            console.error('Failed to copy text: ', err);
+          });
+      }
+
+    script.
+      function toggleButton() {
+        const input = document.getElementById("long-url");
+        const button = document.getElementById("submit-button");
+
+        button.disabled = !input.value.trim();
+      }
 
   body(class="bg-darkBg text-lightText flex flex-col items-center")
     #banner(class="banner w-full bg-accent text-lightText py-4 px-6")
