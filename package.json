@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node main.js",
     "dev": "nodemon",
-    "test": "jest"
+    "test": "SMOLI_ENV=test jest"
   },
   "author": "",
   "license": "ISC",
