@@ -2,10 +2,10 @@ import { NotFoundError } from '../../http/errors.js';
 import { closeDB, connectDB } from '../../persistence/db.js';
 import { urlsDb } from '../../persistence/urls.js';
 
-describe('urlsDb', () => {
-    let db;
-    let collection;
+let db;
+let collection;
 
+describe('urlsDb', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
