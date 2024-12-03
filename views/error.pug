@@ -1,0 +1,15 @@
+block content
+  div(class="container mt-6 bg-darkBg p-6 rounded-lg shadow-lg w-96 border border-accent")
+    div.mb-4
+      label(for="long-url" class="block text-lg mb-2 flex items-center")
+        i(class="fa-solid fa-ghost mr-2")
+        = message
+
+    button(
+      type="button"
+      hx-get="/"
+      hx-target="#content"
+      hx-swap="innerHTML"
+      hx-push-url="/"
+      class="w-full h-12 bg-accent text-darkBg rounded-md p-3 hover:bg-lightText"
+    ) shorten another !

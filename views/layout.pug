@@ -52,6 +52,10 @@ html
   body(class="bg-darkBg text-lightText flex flex-col items-center")
     #banner(class="banner w-full bg-accent text-lightText py-4 px-6")
       include banner.pug
-    #content
-      include home.pug 
+    if err
+      #content
+        include error.pug
+    else
+      #content
+        include home.pug
 
