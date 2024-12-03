@@ -10,9 +10,9 @@ router.use(requestInfo);
 
 router.get("/", (req, res) => {
     if (server.isSameSite(req)) {
-        res.render('home');
+        return res.render('home');
     } else {
-        res.render('layout');
+        return res.render('layout');
     }
 });
 
@@ -22,7 +22,12 @@ router.post("/", async (req, res, next) => {
     try {
         const shortUrl = await urlsHandler.createShortUrl(url);
         const serverUrl = server.getServerUrl(req);
-        res.render("result", { shortUrl: `${serverUrl}/${shortUrl}`, longUrl: url });
+
+        if (!URL.parse(url)) {
+            return res.render("error", { err: true, message: "entered URL is invalid" });
+        }
+
+        return res.render("result", { shortUrl: `${serverUrl}/${shortUrl}`, longUrl: url });
     } catch (error) {
         next(error);
     }
@@ -32,8 +37,11 @@ router.get("/:url", async (req, res, next) => {
     try {
         const { url } = req.params;
         const longUrl = await urlsHandler.getLongUrl(url);
-        res.redirect(301, longUrl);
+        return res.redirect(301, longUrl);
     } catch (error) {
+        if (error.statusCode = 404) {
+            return res.render("layout", { err: true, message: "entered URL not found" });
+        }
         next(error);
     }
 });
