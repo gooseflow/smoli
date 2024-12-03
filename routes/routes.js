@@ -2,14 +2,14 @@ import express from "express";
 import { requestInfo } from "../middleware/logging.js";
 import { urlsHandler } from "../handlers/urls.js";
 import { errorHandler, errorLogger } from "../middleware/errors.js";
-import { server } from "../handlers/server.js";
+import { serverHandler } from "../handlers/server.js";
 
 const router = express.Router();
 
 router.use(requestInfo);
 
 router.get("/", (req, res) => {
-    if (server.isSameSite(req)) {
+    if (serverHandler.isSameSite(req)) {
         return res.render('home');
     } else {
         return res.render('layout');
@@ -21,9 +21,9 @@ router.post("/", async (req, res, next) => {
 
     try {
         const shortUrl = await urlsHandler.createShortUrl(url);
-        const serverUrl = server.getServerUrl(req);
+        const serverUrl = serverHandler.getServerUrl(req);
 
-        if (!server.isValidUrl(url)) {
+        if (!serverHandler.isValidUrl(url)) {
             return res.render("error", {
                 err: true,
                 message: "entered URL is invalid",

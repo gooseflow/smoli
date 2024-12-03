@@ -5,7 +5,7 @@ function getServerUrl(req) {
 }
 
 function isSameSite(req) {
-    const serverUrl = server.getServerUrl(req);
+    const serverUrl = serverHandler.getServerUrl(req);
     const referer = req.get('Referer');
     return referer && referer.startsWith(serverUrl);
 }
@@ -18,7 +18,7 @@ function isValidUrl(urlString) {
     }
 }
 
-export const server = {
+export const serverHandler = {
     getServerUrl,
     isSameSite,
     isValidUrl
