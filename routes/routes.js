@@ -23,8 +23,12 @@ router.post("/", async (req, res, next) => {
         const shortUrl = await urlsHandler.createShortUrl(url);
         const serverUrl = server.getServerUrl(req);
 
-        if (!URL.parse(url)) {
-            return res.render("error", { err: true, message: "entered URL is invalid" });
+        if (!server.isValidUrl(url)) {
+            return res.render("error", {
+                err: true,
+                message: "entered URL is invalid",
+                hint: "hint: make sure to include protocol"
+            });
         }
 
         return res.render("result", { shortUrl: `${serverUrl}/${shortUrl}`, longUrl: url });

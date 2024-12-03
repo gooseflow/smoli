@@ -10,8 +10,17 @@ function isSameSite(req) {
     return referer && referer.startsWith(serverUrl);
 }
 
+function isValidUrl(urlString) {
+    try {
+        return !!(new URL(urlString));
+    } catch {
+        return false;
+    }
+}
+
 export const server = {
     getServerUrl,
-    isSameSite
+    isSameSite,
+    isValidUrl
 }
 
