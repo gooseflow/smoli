@@ -2,11 +2,14 @@ import "dotenv/config";
 import express from "express";
 import routes from "./routes/routes.js";
 import { closeDB, initDBConnection } from "./persistence/db.js";
+import path from "path";
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(express.static(path.join(import.meta.dirname, 'public')));
 app.set("view engine", "pug");
 
 app.use("/", routes);
