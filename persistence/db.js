@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 import { Env } from "../config/env.js";
 
-const url = "mongodb://root:example@localhost:27017";
+const url = process.env.MONGO_URL;
 const client = new MongoClient(url);
 const dbName = getDbName();
 
